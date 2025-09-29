@@ -9,6 +9,7 @@
   --color-secondary: #865DFF;
   --color-accent: #E384FF;
   --color-highlight: #FFA3FD;
+  --color-dark: #191825
 }
 
 @layer components {
