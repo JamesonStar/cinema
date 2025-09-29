@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import HomePage from "./Pages/HomePage";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path="/trending" element={<TrendingPage />} />
         </Routes>
       </Router>
+      <div className="bg-blue-500 text-amber-50">nigerr</div>
     </div>
   );
 }
