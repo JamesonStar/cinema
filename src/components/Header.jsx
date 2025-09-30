@@ -9,7 +9,7 @@ export default function Header() {
           <div className="flex-1 md:flex md:items-center md:gap-12">
             <Link className="block" to="/">
               <span className="sr-only">Home</span>
-              <Logo/>
+              <Logo />
             </Link>
           </div>
 
@@ -45,7 +45,6 @@ export default function Header() {
                     Trending{" "}
                   </Link>
                 </li>
-
 
                 <li>
                   <Link

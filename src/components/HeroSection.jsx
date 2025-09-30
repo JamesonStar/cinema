@@ -7,7 +7,7 @@ const slides = [
     poster: "./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg",
     title: "Chainsaw Man - The Movie: Reze Arc",
     rating: "8.9/10 ⭐",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, saepe ipsa? Exercitationem excepturi hic minus totam minima voluptate assumenda quod?",
+    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, saepe ipsa? Exercitationem excepturi",
   },
   {
     id: 2,
@@ -46,7 +46,7 @@ export default function HeroSlider() {
         style={{ backgroundImage: `url(${slides[current].bg})` }}
       >
         {/* Overlay */}
-        <div className="absolute inset-0 bg-black/50 flex items-center gap-2 p-2">
+        <div className="absolute inset-0 bg-black/50 flex items-center gap-2 p-2 transition-all">
           {/* Poster */}
           <div className="p-2 w-28 lg:w-40 shrink-0">
             <img
