@@ -9,12 +9,13 @@
   --color-secondary: #865DFF;
   --color-accent: #E384FF;
   --color-highlight: #FFA3FD;
-  --color-dark: #191825
+  --color-dark: #191825;
+  --color-text: #ffffff;
 }
 
 @layer components {
   .container {
-    @apply max-w-lg mx-auto border-2 border-highlight shadow-lg mt-2 mb-2 p-4 transition-all;
+    @apply max-w-lg mx-auto shadow-lg mt-2 mb-2 p-5 transition-all lg:p-20;
   }
 }
 
