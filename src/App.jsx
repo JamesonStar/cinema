@@ -6,6 +6,7 @@ import ProfilePage from "./Pages/ProfilePage";
 import FilmPage from "./Pages/FilmPage";
 import SeriesPage from "./Pages/SeriesPage";
 import TrendingPage from "./Pages/TrendingPage";
+import LoginPage from "./Pages/LoginPage";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -22,6 +23,7 @@ function App() {
           <Route path="/film" element={<FilmPage />} />
           <Route path="/series" element={<SeriesPage />} />
           <Route path="/trending" element={<TrendingPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
 
         <Footer />
