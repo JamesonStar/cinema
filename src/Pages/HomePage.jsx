@@ -1,11 +1,13 @@
-import HeroSection from "../components/HeroSection";
-import TrendingSection from "../components/TrendingSection";
+import FilmSection from "../components/HomePage/FilmSection";
+import HeroSection from "../components/HomePage/HeroSection";
+import TrendingSection from "../components/HomePage/TrendingSection";
 
 export default function HomePage() {
   return (
     <div className="">
       <HeroSection />
       <TrendingSection />
+      <FilmSection />
     </div>
   );
 }

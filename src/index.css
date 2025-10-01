@@ -1,23 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Monoton&family=Press+Start+2P&display=swap");
+
 @import "tailwindcss";
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
-
 @theme {
-  --font-family-inter: Inter, sans-serif;
+  --font-press-2p: "Press Start 2P", system-ui, sans-serif;
+  --font-monoton: "Monoton", sans-serif;
 
   --color-primary: #eab308;
-  --color-secondary: #865DFF;
-  --color-accent: #E384FF;
-  --color-highlight: #FFA3FD;
+  --color-secondary: #865dff;
+  --color-accent: #e384ff;
+  --color-highlight: #ffa3fd;
   --color-dark: #191825;
   --color-text: #ffffff;
 }
 
 @layer components {
   .container {
-    @apply max-w-lg mx-auto shadow-lg mt-2 mb-2 p-5 transition-all lg:p-20;
+    @apply max-w-lg mx-auto shadow-lg mt-2 mb-2 p-5 transition-all;
   }
 }
 
 @layer utilities {
+  
 }
+
