@@ -40,9 +40,9 @@ export default function HeroSlider() {
 
   return (
     <div className="container relative text-text">
-      {/* Wrapper */}
+  
       <div className="relative h-40 lg:h-60 rounded-lg overflow-hidden">
-        {/* Track */}
+       
         <div
           className="flex h-full transition-transform duration-700 ease-in-out"
           style={{ transform: `translateX(-${current * 100}%)` }}
@@ -53,9 +53,9 @@ export default function HeroSlider() {
               className="w-full flex-shrink-0 relative bg-cover bg-center"
               style={{ backgroundImage: `url(${slide.bg})` }}
             >
-              {/* Overlay */}
+            
               <div className="absolute inset-0 bg-black/50 flex items-center gap-2 p-2">
-                {/* Poster */}
+    
                 <div className="p-2 w-28 lg:w-40 shrink-0">
                   <img
                     className="rounded-md"
@@ -64,7 +64,6 @@ export default function HeroSlider() {
                   />
                 </div>
 
-                {/* Info */}
                 <div className="flex flex-col gap-2 max-w-lg pb-5">
                   <div className="flex gap-1 items-center text-sm">
                     <p className="text-[7px] bg-yellow-600 w-7 h-3 text-center rounded-sm text-black">
@@ -90,7 +89,6 @@ export default function HeroSlider() {
           ))}
         </div>
 
-        {/* Controls */}
         <button
           onClick={prevSlide}
           className="absolute top-1/2 left-2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white rounded-full p-1"
@@ -129,8 +127,7 @@ export default function HeroSlider() {
             />
           </svg>
         </button>
-
-        {/* Indicator Dots */}
+        
         <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
           {slides.map((_, idx) => (
             <button
