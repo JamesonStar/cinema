@@ -1,7 +1,7 @@
 export default function FilmSection() {
   return (
     <div className="container">
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8">
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8 xl:grid-cols-5">
         <a href="#" className="group relative block bg-black">
           <img
             alt="Bleach.png"
@@ -57,6 +57,7 @@ export default function FilmSection() {
             </div>
           </div>
         </a>
+
         <a href="#" className="group relative block bg-black">
           <img
             alt="Bleach.png"
@@ -112,6 +113,7 @@ export default function FilmSection() {
             </div>
           </div>
         </a>
+
         <a href="#" className="group relative block bg-black">
           <img
             alt="Bleach.png"
@@ -167,6 +169,7 @@ export default function FilmSection() {
             </div>
           </div>
         </a>
+
         <a href="#" className="group relative block bg-black">
           <img
             alt="Bleach.png"
@@ -223,6 +226,8 @@ export default function FilmSection() {
           </div>
         </a>
       </div>
+
+      <button>Load</button>
     </div>
   );
 }
