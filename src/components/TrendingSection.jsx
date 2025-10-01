@@ -1,1 +1,7 @@
-export default function TrendingSection() {}
+export default function TrendingSection() {
+    return(
+        <div className="container text-text">
+
+        </div>
+    )
+}

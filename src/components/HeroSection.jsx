@@ -6,7 +6,7 @@ const slides = [
     bg: "./src/assets/img/thumbnail/Chainsaw-Man-Reze-Arc-Thumb.jpg",
     poster: "./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg",
     title: "Chainsaw Man - The Movie: Reze Arc",
-    rating: "8.9/10 ⭐",
+    rating: "9.9/10 ⭐",
     desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, saepe ipsa? Exercitationem excepturi",
   },
   {
@@ -14,7 +14,7 @@ const slides = [
     bg: "./src/assets/img/thumbnail/yuta-okkotsu-jujutsu-kaisen-0-Cropped.jpg",
     poster: "./src/assets/img/posters/Gekijo-ban_Jujutsu_Kaisen_0.png",
     title: "Jujutsu Kaisen 0",
-    rating: "9.1/10 ⭐",
+    rating: "8.1/10 ⭐",
     desc: "Prequel epik dengan Yuta Okkotsu sebagai protagonis utama. Pertarungan sengit dengan Suguru Geto.",
   },
   {
@@ -40,46 +40,50 @@ export default function HeroSlider() {
 
   return (
     <div className="container relative text-text">
-      <div
-        key={slides[current].id}
-        className="relative h-40 lg:h-60 rounded-lg bg-cover bg-center transition-all duration-500"
-        style={{ backgroundImage: `url(${slides[current].bg})` }}
-      >
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/50 flex items-center gap-2 p-2 transition-all">
-          {/* Poster */}
-          <div className="p-2 w-28 lg:w-40 shrink-0">
-            <img
-              className="rounded-md"
-              src={slides[current].poster}
-              alt={slides[current].title}
-            />
-          </div>
+      <div className="relative h-40 lg:h-60 rounded-lg overflow-hidden">
+        {slides.map((slide, idx) => (
+          <div
+            key={slide.id}
+            className={`absolute inset-0 bg-cover bg-center transition-opacity duration-500 ${
+              current === idx ? "opacity-100" : "opacity-0"
+            }`}
+            style={{ backgroundImage: `url(${slide.bg})` }}
+          >
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/50 flex items-center gap-2 p-2 transition-all">
+              {/* Poster */}
+              <div className="p-2 w-28 lg:w-40 shrink-0">
+                <img
+                  className="rounded-md"
+                  src={slide.poster}
+                  alt={slide.title}
+                />
+              </div>
 
-          {/* Info */}
-          <div className="flex flex-col gap-2 max-w-lg">
-            <div className="flex gap-1 items-center text-sm">
-              <p className="text-[7px] bg-yellow-600 w-7 h-3 text-center rounded-sm text-black">
-                Tmdb
-              </p>
-              <p className="text-[10px]">{slides[current].rating}</p>
-            </div>
-            <p className="text-sm font-bold lg:text-2xl">
-              {slides[current].title}
-            </p>
-            <p className="text-[10px] font-extralight lg:text-sm">
-              {slides[current].desc}
-            </p>
-            <div className="flex pt-2 gap-1">
-              <button className="bg-secondary rounded-sm p-1 text-[10px] border border-transparent hover:border-secondary hover:bg-black/50 hover:text-secondary transition-all">
-                See Detail
-              </button>
-              <button className="rounded-sm font-bold bg-linear-60/oklch from-secondary via-accent bg-clip-text text-transparent to-highlight p-1 text-[10px] border border-transparent hover:bg-clip-border hover:bg-black/30 hover:text-white transition-all">
-                Add Watchlist
-              </button>
+              {/* Info */}
+              <div className="flex flex-col gap-2 max-w-lg pb-5">
+                <div className="flex gap-1 items-center text-sm">
+                  <p className="text-[7px] bg-yellow-600 w-7 h-3 text-center rounded-sm text-black">
+                    Tmdb
+                  </p>
+                  <p className="text-[10px]">{slide.rating}</p>
+                </div>
+                <p className="text-sm font-bold lg:text-2xl">{slide.title}</p>
+                <p className="text-[10px] font-extralight lg:text-sm">
+                  {slide.desc}
+                </p>
+                <div className="flex pt-2 gap-1">
+                  <button className="bg-secondary rounded-sm p-1 text-[10px] border border-transparent hover:border-secondary hover:bg-black/50 hover:text-secondary transition-all">
+                    See Detail
+                  </button>
+                  <button className="rounded-sm font-bold bg-linear-60/oklch from-secondary via-accent bg-clip-text text-transparent to-highlight p-1 text-[10px] border border-transparent hover:bg-clip-border hover:bg-black/30 hover:text-white transition-all">
+                    Add Watchlist
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        ))}
 
         {/* Controls */}
         <button
@@ -120,6 +124,19 @@ export default function HeroSlider() {
             />
           </svg>
         </button>
+
+        {/* Indicator Dots */}
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
+          {slides.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrent(idx)}
+              className={`w-3 h-3 rounded-full transition-all ${
+                current === idx ? "bg-white" : "bg-white/50 hover:bg-white"
+              }`}
+            ></button>
+          ))}
+        </div>
       </div>
     </div>
   );
