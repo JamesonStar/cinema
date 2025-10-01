@@ -1,7 +1,7 @@
 export default function TrendingSection() {
   return (
-    <div className="container max-h-70 text-text">
-      <h1 className="font-inter font-bold text-2xl">
+    <div className="container min-h-70 text-text">
+      <h1 className="font-inter font-bold text-2xl lg:text-3xl xl:5xl">
         Movie of the{" "}
         <span className="bg-linear-90/oklab from-primary via-accent to-secondary bg-clip-text text-transparent text-3xl font-monoton">
           W E E K
@@ -10,12 +10,13 @@ export default function TrendingSection() {
 
       <div
         className="
-          flex gap-4 overflow-x-scroll h-55 
-          lg:grid lg:grid-cols-5 lg:gap-6 lg:overflow-x-hidden 
-          xl:grid-cols-5 xl:gap-8
+          flex gap-4 overflow-x-scroll h-55
+          md:gap-4 md:h-60
+          lg:gap-6 lg:h-70
+          xl:gap-8 xl:h-80
         "
       >
-        <div className="w-40 h-50 lg:w-full shrink-0 rounded-lg relative group overflow-hidden">
+        <div className="w-40 h-50 md:h-55 md:w-40 lg:h-65 lg:w-50 xl:h-75 shrink-0 rounded-lg relative group overflow-hidden">
           {/* Poster */}
           <img
             src="./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg"
@@ -31,7 +32,7 @@ export default function TrendingSection() {
           </div>
         </div>
 
-        <div className="w-40 h-50 lg:w-full shrink-0 rounded-lg relative group">
+        <div className="w-40 h-50 md:h-55 md:w-40 lg:h-65 lg:w-50 xl:h-75 shrink-0 rounded-lg relative group overflow-hidden">
           {/* Poster */}
           <img
             src="./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg"
@@ -44,7 +45,7 @@ export default function TrendingSection() {
             2
           </p>
         </div>
-        <div className="w-40 h-50 lg:w-full shrink-0 rounded-lg relative group">
+        <div className="w-40 h-50 md:h-55 md:w-40 lg:h-65 lg:w-50 xl:h-75 shrink-0 rounded-lg relative group overflow-hidden">
           {/* Poster */}
           <img
             src="./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg"
@@ -57,7 +58,7 @@ export default function TrendingSection() {
             3
           </p>
         </div>
-        <div className="w-40 h-50 lg:w-full shrink-0 rounded-lg relative group">
+        <div className="w-40 h-50 md:h-55 md:w-40 lg:h-65 lg:w-50 xl:h-75 shrink-0 rounded-lg relative group overflow-hidden">
           {/* Poster */}
           <img
             src="./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg"
@@ -68,10 +69,7 @@ export default function TrendingSection() {
           {/* Ranking number */}
           <p className="font-monoton text-7xl absolute bottom-0 pl-1">4</p>
         </div>
-        <div
-          className="w-40 h-50 lg:w-full shrink-0 rounded-l
-        g relative group"
-        >
+        <div className="w-40 h-50 md:h-55 md:w-40 lg:h-65 lg:w-50 xl:h-75 shrink-0 rounded-lg relative group overflow-hidden">
           {/* Poster */}
           <img
             src="./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg"
@@ -81,6 +79,28 @@ export default function TrendingSection() {
 
           {/* Ranking number */}
           <p className="font-monoton text-7xl absolute bottom-0 pl-1">5</p>
+        </div>
+        <div className="w-40 h-50 md:h-55 md:w-40 lg:h-65 lg:w-50 xl:h-75 shrink-0 rounded-lg relative group overflow-hidden">
+          {/* Poster */}
+          <img
+            src="./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg"
+            alt="Chainsaw Man"
+            className="w-full h-full object-cover opacity-80"
+          />
+
+          {/* Ranking number */}
+          <p className="font-monoton text-7xl absolute bottom-0 pl-1">6</p>
+        </div>
+        <div className="w-40 h-50 md:h-55 md:w-40 lg:h-65 lg:w-50 xl:h-75 shrink-0 rounded-lg relative group overflow-hidden">
+          {/* Poster */}
+          <img
+            src="./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg"
+            alt="Chainsaw Man"
+            className="w-full h-full object-cover opacity-80"
+          />
+
+          {/* Ranking number */}
+          <p className="font-monoton text-7xl absolute bottom-0 pl-1">7</p>
         </div>
       </div>
     </div>

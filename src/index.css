@@ -16,7 +16,7 @@
 
 @layer components {
   .container {
-    @apply max-w-lg mx-auto shadow-lg mt-2 mb-2 p-5 transition-all lg:p-20;
+    @apply max-w-lg mx-auto shadow-lg mt-2 mb-2 p-5 transition-all;
   }
 }
 

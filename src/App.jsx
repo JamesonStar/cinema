@@ -9,12 +9,15 @@ import TrendingPage from "./Pages/TrendingPage";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ScrollToTopButton from "./components/ScrollTop";
 
 function App() {
   return (
     <div className="">
       <Router>
         <Header />
+
+        <ScrollToTopButton />
 
         <Routes>
           <Route path="/" element={<HomePage />} />
