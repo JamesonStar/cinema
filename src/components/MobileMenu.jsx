@@ -50,6 +50,15 @@ export default function MobileMenu() {
         <ul className="absolute right-0 mt-2 w-40 space-y-1 bg-gray-800 rounded-lg shadow-lg p-2 z-50">
           <li>
             <Link
+              to="/"
+              className="block rounded-md px-4 py-2 text-sm text-white hover:bg-gray-700"
+              onClick={() => setIsOpen(false)}
+            >
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link
               to="/film"
               className="block rounded-md px-4 py-2 text-sm text-white hover:bg-gray-700"
               onClick={() => setIsOpen(false)}
@@ -82,6 +91,15 @@ export default function MobileMenu() {
               onClick={() => setIsOpen(false)}
             >
               Profile
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/login"
+              className="block rounded-md px-4 py-2 text-sm text-white hover:bg-gray-700"
+              onClick={() => setIsOpen(false)}
+            >
+              Login
             </Link>
           </li>
         </ul>
