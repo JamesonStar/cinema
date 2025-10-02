@@ -70,71 +70,17 @@ export default function HeroSlider() {
                   <p className="text-[10px] font-extralight lg:text-sm">
                     {slide.desc}
                   </p>
-                  <p className="text-[10px]">{slide.rating}</p>
-                </div>
-                <p className="text-sm font-bold lg:text-2xl">{slide.title}</p>
-                <p className="text-[10px] font-extralight lg:text-sm">
-                  {slide.desc}
-                </p>
-                <div className="flex pt-2 gap-1">
-                  <button className="bg-secondary rounded-sm p-1 text-[10px] border border-transparent hover:border-secondary hover:bg-black/50 hover:text-secondary transition-all">
-                    See Detail
-                  </button>
-                  <button className="rounded-sm font-bold bg-linear-60/oklch from-secondary via-accent bg-clip-text text-transparent to-highlight p-1 text-[10px] border border-transparent hover:bg-clip-border hover:bg-black/30 hover:text-white transition-all">
-                    Add Watchlist
-                  </button>
+                  <div className="flex pt-2 gap-1">
+                    <button className="bg-secondary rounded-sm p-1 text-[10px] border border-transparent hover:border-secondary hover:bg-black/50 hover:text-secondary transition-all">
+                      See Detail
+                    </button>
+                    <button className="rounded-sm font-bold bg-linear-60/oklch from-secondary via-accent bg-clip-text text-transparent to-highlight p-1 text-[10px] border border-transparent hover:bg-clip-border hover:bg-black/30 hover:text-white transition-all">
+                      Add Watchlist
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
-        <button
-          onClick={prevSlide}
-          className="absolute top-1/2 left-2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white rounded-full p-1"
-        >
-          <svg
-            className="size-5 shadow-sm rotate-180"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
-            />
-          </svg>
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute top-1/2 right-2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white rounded-full p-1"
-        >
-          <svg
-            className="size-5 shadow-sm rtl:rotate-180"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
-            />
-          </svg>
-        </button>
-        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
-          {slides.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrent(idx)}
-              className={`w-3 h-3 rounded-full transition-all ${
-                current === idx ? "bg-white" : "bg-white/50 hover:bg-white"
-              }`}
-            ></button>
           ))}
         </div>
       </div>
