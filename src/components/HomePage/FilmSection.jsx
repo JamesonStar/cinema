@@ -1,6 +1,7 @@
 export default function FilmSection() {
   return (
-    <div className="container">
+    <div className="container ">
+      <h1 className="text-text font-bold font-press-2p text-2xl pb-2"><span className="text-blue-400">M</span>ovie and <span className="text-highlight">S</span>eries</h1>
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8 xl:grid-cols-5">
         <a href="#" className="group relative block bg-black">
           <img
