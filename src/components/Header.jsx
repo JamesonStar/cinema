@@ -23,7 +23,7 @@ export default function Header() {
                     to="/film"
                   >
                     {" "}
-                    Film{" "}
+                    Movie{" "}
                   </Link>
                 </li>
 
