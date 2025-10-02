@@ -71,14 +71,14 @@ export default function Header() {
                 <div className="hidden sm:flex">
                   <Link
                     className="rounded-md px-5 py-2.5 border-2 border-yellow-600 text-sm font-medium text-yellow-600"
-                    href="/register"
+                    to="/register"
                   >
                     Register
                   </Link>
                 </div>
               </div>
 
-              <MobileMenu/>
+              <MobileMenu />
             </div>
           </div>
         </div>

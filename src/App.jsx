@@ -7,7 +7,7 @@ import FilmPage from "./Pages/FilmPage";
 import SeriesPage from "./Pages/SeriesPage";
 import TrendingPage from "./Pages/TrendingPage";
 import LoginPage from "./Pages/LoginPage";
-
+import RegisterPage from "./Pages/RegisterPage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ScrollToTopButton from "./components/ScrollTop";
@@ -22,6 +22,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/register" element={<RegisterPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/film" element={<FilmPage />} />
           <Route path="/series" element={<SeriesPage />} />
