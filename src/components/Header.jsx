@@ -6,6 +6,7 @@ export default function Header() {
   const { pathname } = useLocation();
 
   const navItems = [
+    { name: "Home", path: "/" },
     { name: "Film", path: "/film" },
     { name: "Series", path: "/series" },
     { name: "Trending", path: "/trending" },
@@ -34,14 +35,14 @@ export default function Header() {
                       to={item.path}
                       className={`relative transition-colors duration-300 ${
                         pathname === item.path
-                          ? "text-yellow-500"
+                          ? "text-accent"
                           : "text-gray-400 hover:text-yellow-400"
                       }`}
                     >
                       {item.name}
                       {/* underline animation */}
                       <span
-                        className={`absolute -bottom-1 left-0 h-0.5 w-full scale-x-0 bg-yellow-500 transition-transform duration-300 ${
+                        className={`absolute -bottom-1 left-0 h-0.5 w-full scale-x-0 bg-highlight transition-transform duration-300 ${
                           pathname === item.path
                             ? "scale-x-100"
                             : "group-hover:scale-x-100"
@@ -56,13 +57,13 @@ export default function Header() {
             {/* Buttons */}
             <div className="hidden sm:flex items-center gap-3">
               <Link
-                className="rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 px-5 py-2 text-sm font-semibold text-white shadow-lg hover:opacity-90 transition-all"
+                className="rounded-full bg-yellow-600 px-5 py-2 text-sm font-semibold text-white shadow-lg hover:opacity-90 transition-all"
                 to="/login"
               >
                 Login
               </Link>
               <Link
-                className="rounded-full border-2 border-yellow-500 px-5 py-2 text-sm font-semibold text-yellow-500 hover:bg-yellow-500 hover:text-white transition-all"
+                className="rounded-full border-2 border-yellow-600 px-5 py-2 text-sm font-semibold text-yellow-600 hover:bg-yellow-600 hover:text-white transition-all"
                 to="/register"
               >
                 Register

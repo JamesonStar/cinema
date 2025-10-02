@@ -6,7 +6,7 @@ function FilterBar({ genres, selectedGenre, onGenreChange, sortBy, onSortChange 
       <div className="flex flex-wrap gap-2">
         <button
           onClick={() => onGenreChange(null)}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition ${!selectedGenre ? 'bg-primary text-black' : 'bg-dark/50 text-text hover:bg-dark/70'}`}
+          className={`px-4 py-2 rounded-full text-sm font-medium transition ${!selectedGenre ? 'bg-secondary text-black' : 'bg-dark/50 text-text hover:bg-dark/70'}`}
         >
           All
         </button>
@@ -14,7 +14,7 @@ function FilterBar({ genres, selectedGenre, onGenreChange, sortBy, onSortChange 
           <button
             key={genre.id}
             onClick={() => onGenreChange(genre.id)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition ${selectedGenre === genre.id ? 'bg-primary text-black' : 'bg-dark/50 text-text hover:bg-dark/70'}`}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition ${selectedGenre === genre.id ? 'bg-secondary text-black' : 'bg-dark/50 text-text hover:bg-dark/70'}`}
           >
             {genre.name}
           </button>
@@ -23,7 +23,7 @@ function FilterBar({ genres, selectedGenre, onGenreChange, sortBy, onSortChange 
       <select
         value={sortBy}
         onChange={(e) => onSortChange(e.target.value)}
-        className="bg-dark/50 text-text px-4 py-2 rounded-lg border border-secondary/20 focus:outline-none focus:border-primary"
+        className="bg-dark/50 text-text px-4 py-2 rounded-lg border border-secondary/20 focus:outline-none focus:border-secondary"
       >
         <option value="popularity.desc">Trending</option>
         <option value="release_date.desc">Newest</option>
