@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 
 const slides = [
@@ -7,7 +8,7 @@ const slides = [
     poster: "./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg",
     title: "Chainsaw Man - The Movie: Reze Arc",
     rating: "9.9/10 ⭐",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, saepe ipsa? Exercitationem excepturi",
+    desc: "Arc paling dinanti dengan Reze yang penuh misteri. Visual epik dan drama emosional.",
   },
   {
     id: 2,
@@ -30,112 +31,96 @@ const slides = [
 export default function HeroSection() {
   const [current, setCurrent] = useState(0);
 
-  const nextSlide = () => {
+  const nextSlide = () =>
     setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-  };
 
-  const prevSlide = () => {
+  const prevSlide = () =>
     setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-  };
 
   return (
-    <div className="container relative text-text">
-      <div className="relative h-40 lg:h-60 rounded-lg overflow-hidden">
+    <section className="container relative text-white">
+      <div className="relative h-48 lg:h-72 rounded-xl overflow-hidden shadow-lg">
         {slides.map((slide, idx) => (
-  <div
-    key={slide.id}
-    className={`absolute inset-0 bg-cover bg-center transition-opacity duration-500 ease-in-out
-      ${current === idx ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
-    style={{ backgroundImage: `url(${slide.bg})` }}
-  >
-    {/* Overlay */}
-    <div className="absolute inset-0 bg-black/50 flex items-center gap-2 p-2">
-      {/* Poster */}
-      <div className="p-2 w-28 lg:w-40 shrink-0">
-        <img
-          className="rounded-md"
-          src={slide.poster}
-          alt={slide.title}
-        />
-      </div>
+          <div
+            key={slide.id}
+            className={`absolute inset-0 bg-cover bg-center transition-all duration-700 ease-in-out
+              ${current === idx ? "opacity-100 scale-100" : "opacity-0 scale-105"}`}
+            style={{ backgroundImage: `url(${slide.bg})` }}
+          >
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20 flex items-center gap-4 p-4 lg:p-8">
+              {/* Poster */}
+              <div className="w-24 lg:w-40 shrink-0">
+                <img
+                  className="rounded-lg shadow-md"
+                  src={slide.poster}
+                  alt={slide.title}
+                />
+              </div>
 
-      {/* Info */}
-      <div className="flex flex-col gap-2 max-w-lg pb-5">
-        <div className="flex gap-1 items-center text-sm">
-          <p className="text-[7px] bg-yellow-600 w-7 h-3 text-center rounded-sm text-black">
-            Tmdb
-          </p>
-          <p className="text-[10px]">{slide.rating}</p>
-        </div>
-        <p className="text-sm font-bold lg:text-2xl">{slide.title}</p>
-        <p className="text-[10px] font-extralight lg:text-sm">{slide.desc}</p>
-        <div className="flex pt-2 gap-1">
-          <button className="bg-secondary rounded-sm p-1 text-[10px] border border-transparent hover:border-secondary hover:bg-black/50 hover:text-secondary transition-all">
-            See Detail
-          </button>
-          <button className="rounded-sm font-bold bg-linear-60/oklch from-secondary via-accent bg-clip-text text-transparent to-highlight p-1 text-[10px] border border-transparent hover:bg-clip-border hover:bg-black/30 hover:text-white transition-all">
-            Add Watchlist
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-))}
+              {/* Info */}
+              <div className="flex flex-col gap-2 max-w-xl">
+                {/* Rating */}
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="px-2 py-0.5 bg-yellow-500 text-black font-semibold rounded">
+                    TMDB
+                  </span>
+                  <span>{slide.rating}</span>
+                </div>
 
+                {/* Title */}
+                <h2 className="text-base lg:text-2xl font-extrabold drop-shadow">
+                  {slide.title}
+                </h2>
+
+                {/* Description */}
+                <p className="text-xs lg:text-sm text-gray-200 line-clamp-3">
+                  {slide.desc}
+                </p>
+
+                {/* Buttons */}
+                <div className="flex gap-2 pt-2">
+                  <button className="px-3 py-1 text-xs rounded bg-secondary border border-transparent hover:border-secondary hover:bg-black/60 hover:text-secondary transition">
+                    See Detail
+                  </button>
+                  <button className="px-3 py-1 text-xs rounded font-bold bg-gradient-to-r from-secondary via-accent to-highlight bg-clip-text text-transparent border border-transparent hover:bg-black/40 hover:text-white transition">
+                    Add Watchlist
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
 
         {/* Controls */}
         <button
           onClick={prevSlide}
-          className="absolute top-1/2 left-2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white rounded-full p-1"
+          className="absolute top-1/2 left-3 -translate-y-1/2 bg-black/40 hover:bg-black/70 rounded-full p-2"
         >
-          <svg
-            className="size-5 shadow-sm rotate-180"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
-            />
-          </svg>
+          ❮
         </button>
         <button
           onClick={nextSlide}
-          className="absolute top-1/2 right-2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white rounded-full p-1"
+          className="absolute top-1/2 right-3 -translate-y-1/2 bg-black/40 hover:bg-black/70 rounded-full p-2"
         >
-          <svg
-            className="size-5 shadow-sm rtl:rotate-180"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
-            />
-          </svg>
+          ❯
         </button>
 
-        {/* Indicator Dots */}
-        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
+        {/* Dots */}
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
           {slides.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setCurrent(idx)}
               className={`w-3 h-3 rounded-full transition-all ${
-                current === idx ? "bg-white" : "bg-white/50 hover:bg-white"
+                current === idx
+                  ? "bg-yellow-500 scale-125"
+                  : "bg-white/50 hover:bg-white"
               }`}
-            ></button>
+            />
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
