@@ -27,7 +27,7 @@ const slides = [
   },
 ];
 
-export default function HeroSlider() {
+export default function HeroSection() {
   const [current, setCurrent] = useState(0);
 
   const nextSlide = () => {
