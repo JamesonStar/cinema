@@ -62,8 +62,10 @@ export default function Register() {
           onChange={(e) => setConfirmPassword(e.target.value)}
           className="p-2 border rounded-md"
         />
-
-        <button type="submit" className="bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
+        <button
+          type="submit"
+          className="bg-accent/100 hover:bg-accent/75 text-white font-semibold py-2 rounded-md transition-colors"
+        >
           Register
         </button>
 

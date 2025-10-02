@@ -1,85 +1,77 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo";
 import MobileMenu from "./MobileMenu";
 
 export default function Header() {
+  const { pathname } = useLocation();
+
+  const navItems = [
+    { name: "Home", path: "/" },
+    { name: "Film", path: "/film" },
+    { name: "Series", path: "/series" },
+    { name: "Trending", path: "/trending" },
+    { name: "Profile", path: "/profile" },
+  ];
+
   return (
-    <header className="">
+    <header className="sticky top-0 z-50 bg-dark/60 backdrop-blur-md shadow-md">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <div className="flex-1 md:flex md:items-center md:gap-12">
-            <Link className="block" to="/">
+          {/* Logo */}
+          <div className="flex-1 flex items-center gap-3">
+            <Link to="/" className="flex items-center gap-2">
               <span className="sr-only">Home</span>
               <Logo />
             </Link>
           </div>
 
-          <div className="md:flex md:items-center md:gap-12">
+          {/* Navigation */}
+          <div className="flex items-center gap-6">
             <nav aria-label="Global" className="hidden md:block">
-              <ul className="flex items-center gap-6 text-sm">
-                <li>
-                  <Link
-                    className="text-gray-500 transition hover:text-gray-500/75"
-                    to="/film"
-                  >
-                    {" "}
-                    Film{" "}
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    className="text-gray-500 transition hover:text-gray-500/75"
-                    to="/series"
-                  >
-                    {" "}
-                    Series{" "}
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    className="text-gray-500 transition hover:text-gray-500/75"
-                    to="/trending"
-                  >
-                    {" "}
-                    Trending{" "}
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    className="text-gray-500 transition hover:text-gray-500/75"
-                    to="/profile"
-                  >
-                    {" "}
-                    Profile{" "}
-                  </Link>
-                </li>
+              <ul className="flex items-center gap-6 text-sm font-medium">
+                {navItems.map((item) => (
+                  <li key={item.name}>
+                    <Link
+                      to={item.path}
+                      className={`relative transition-colors duration-300 ${
+                        pathname === item.path
+                          ? "text-accent"
+                          : "text-gray-400 hover:text-yellow-400"
+                      }`}
+                    >
+                      {item.name}
+                      {/* underline animation */}
+                      <span
+                        className={`absolute -bottom-1 left-0 h-0.5 w-full scale-x-0 bg-highlight transition-transform duration-300 ${
+                          pathname === item.path
+                            ? "scale-x-100"
+                            : "group-hover:scale-x-100"
+                        }`}
+                      />
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </nav>
 
-            <div className="flex items-center gap-4">
-              <div className="sm:flex sm:gap-4">
-                <Link
-                  className="rounded-md bg-yellow-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm"
-                  to="/login"
-                >
-                  Login
-                </Link>
-
-                <div className="hidden sm:flex">
-                  <Link
-                    className="rounded-md px-5 py-2.5 border-2 border-yellow-600 text-sm font-medium text-yellow-600"
-                    to="/register"
-                  >
-                    Register
-                  </Link>
-                </div>
-              </div>
-
-              <MobileMenu />
+            {/* Buttons */}
+            <div className="hidden sm:flex items-center gap-3">
+              <Link
+                className="rounded-full bg-yellow-600 px-5 py-2 text-sm font-semibold text-white shadow-lg hover:opacity-90 transition-all"
+                to="/login"
+              >
+                Login
+              </Link>
+              <Link
+                className="rounded-full border-2 border-yellow-600 px-5 py-2 text-sm font-semibold text-yellow-600 hover:bg-yellow-600 hover:text-white transition-all"
+                to="/register"
+              >
+                Register
+              </Link>
             </div>
+
+            {/* Mobile Menu */}
+            <MobileMenu />
           </div>
         </div>
       </div>
