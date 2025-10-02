@@ -1,6 +1,6 @@
 export default function Login() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-primary/1">
+    <div className="min-h-screen flex items-center justify-center bg-dark">
       <form className="bg-gray-50 w-full max-w-sm p-6 rounded-lg shadow-md flex flex-col gap-4">
         <h1 className="text-2xl font-bold text-center mb-4">Login</h1>
 
@@ -30,7 +30,7 @@ export default function Login() {
 
         <button
           type="submit"
-          className="bg-primary/100 hover:bg-primary/75 text-white font-semibold py-2 rounded-md transition-colors"
+          className="bg-accent/100 hover:bg-accent/75 text-white font-semibold py-2 rounded-md transition-colors"
         >
           Login
         </button>

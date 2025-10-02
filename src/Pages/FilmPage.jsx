@@ -14,12 +14,13 @@ function MovieCard({ movie, onLike }) {
       <img
         src={movie.poster}
         alt={movie.title}
-        className="w-full h-60 object-cover"
+        className="w-full h-64 object-cover"
       />
       <div className="p-6">
         <h3 className="text-xl font-bold mb-2">
           {movie.title} ({movie.year})
         </h3>
+        <p className="text-gray-600 mb-4 line-clamp-3">{movie.description}</p>
         <button
           onClick={() => onLike(movie.id)}
           className="flex items-center space-x-2 text-gray-500 hover:text-red-500 transition-colors duration-300"
@@ -78,7 +79,6 @@ function FilmPage() {
   return (
     <div className="min-h-screen bg-dark py-8">
       <div className="container mx-auto px-4">
-        <h1 className="text-white text-3xl font-bold pb-10 ">Movie</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {movies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} onLike={handleLike} />
