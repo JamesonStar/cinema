@@ -1,5 +1,5 @@
 /* FilmSection.jsx */
-import FilmCard from "../components/UI/FilmCard";
+import FilmCard from "../components/FilmCard";
 
 const films = [
   {

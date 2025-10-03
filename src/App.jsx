@@ -8,8 +8,8 @@ import SeriesPage from "./Pages/SeriesPage";
 import TrendingPage from "./Pages/TrendingPage";
 import LoginPage from "./Pages/LoginPage";
 import RegisterPage from "./Pages/RegisterPage";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Header from "./section/Header";
+import Footer from "./section/Footer";
 import ScrollToTopButton from "./components/ScrollTop";
 
 function App() {
