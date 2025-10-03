@@ -10,9 +10,9 @@ export default function Logo() {
       <text
         x="10"
         y="75"
-        font-family="Arial, Helvetica, sans-serif"
-        font-weight="bold"
-        font-size="48"
+        fontFamily="Arial, Helvetica, sans-serif"
+        fontWeight="bold"
+        fontSize="48"
         fill="white"
       >
         CinemaXXX
@@ -21,9 +21,9 @@ export default function Logo() {
       <text
         x="295"
         y="70"
-        font-family="Arial, Helvetica, sans-serif"
-        font-weight="bold"
-        font-size="40"
+        fontFamily="Arial, Helvetica, sans-serif"
+        fontWeight="bold"
+        fontSize="40"
         fill="black"
       >
         Hub
