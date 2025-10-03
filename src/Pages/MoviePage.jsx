@@ -90,7 +90,7 @@ function SearchBar({ onSearch }) {
   );
 }
 
-function FilmPage() {
+function MoviePage() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (query) => {
@@ -140,4 +140,4 @@ function FilmPage() {
   );
 }
 
-export default FilmPage;
+export default MoviePage;

@@ -7,7 +7,7 @@ export default function Header() {
 
   const navItems = [
     { name: "Home", path: "/" },
-    { name: "Film", path: "/film" },
+    { name: "Movie", path: "/movie" },
     { name: "Series", path: "/series" },
     { name: "Trending", path: "/trending" },
     { name: "Profile", path: "/profile" },
