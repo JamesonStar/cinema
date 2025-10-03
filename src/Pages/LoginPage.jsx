@@ -56,7 +56,7 @@ export default function Login() {
           <input id="password" value={form.password} onChange={onChange} type="password" placeholder="Enter your password" className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
 
-        <button type="submit" disabled={loading} className="bg-primary/100 hover:bg-primary/75 text-white font-semibold py-2 rounded-md transition-colors">
+        <button type="submit" disabled={loading} className="bg-accent/100 hover:bg-accent/75 text-white font-semibold py-2 rounded-md transition-colors">
           {loading ? 'Logging in...' : 'Login'}
 
         </button>
