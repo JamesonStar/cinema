@@ -1,76 +1,153 @@
 import { useState } from "react";
 
 export default function Register() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  });
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
+    setIsLoading(true);
+
+    // Client-side validation
+    const { username, email, password, confirmPassword } = formData;
+    
+    if (!username.trim() || !email.trim() || !password || !confirmPassword) {
+      setMessage("❌ Semua field wajib diisi");
+      setIsLoading(false);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setMessage("❌ Password tidak cocok");
+      setIsLoading(false);
+      return;
+    }
+
+    if (password.length < 6) {
+      setMessage("❌ Password minimal 6 karakter");
+      setIsLoading(false);
+      return;
+    }
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/auth/register`, {
+      const res = await fetch("https://2ef21abc5019.ngrok-free.app/api/auth/register", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password, confirmPassword }),
+        headers: { 
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ 
+          username: username.trim(), 
+          email: email.trim().toLowerCase(), 
+          password, 
+          confirmPassword 
+        }),
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
+      
+      if (!res.ok) {
+        // Handle validation errors from server
+        if (data.errors) {
+          throw new Error(data.errors.join(', '));
+        }
+        throw new Error(data.message || `Error: ${res.status}`);
+      }
+      
       setMessage("✅ " + data.message);
+      // Clear form
+      setFormData({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
+      });
+      
     } catch (err) {
+      console.error("Register error:", err);
       setMessage("❌ " + err.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  // RETURN STATEMENT YANG BENAR - dalam function component
   return (
-    <div className="min-h-screen flex items-center justify-center bg-primary/1">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-50 w-full max-w-sm p-6 rounded-lg shadow-md flex flex-col gap-4"
+        className="bg-white w-full max-w-sm p-6 rounded-lg shadow-md flex flex-col gap-4"
       >
-        <h1 className="text-2xl font-bold text-center mb-4">Register</h1>
+        <h1 className="text-2xl font-bold text-center mb-4 text-gray-800">Register</h1>
 
         <input
           type="text"
+          name="username"
           placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="p-2 border rounded-md"
+          value={formData.username}
+          onChange={handleChange}
+          className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
         />
         <input
           type="email"
+          name="email"
           placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="p-2 border rounded-md"
+          value={formData.email}
+          onChange={handleChange}
+          className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
         />
         <input
           type="password"
+          name="password"
           placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="p-2 border rounded-md"
+          value={formData.password}
+          onChange={handleChange}
+          className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
         />
         <input
           type="password"
+          name="confirmPassword"
           placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          className="p-2 border rounded-md"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
         />
+        
         <button
           type="submit"
-          className="bg-accent/100 hover:bg-accent/75 text-white font-semibold py-2 rounded-md transition-colors"
+          disabled={isLoading}
+          className={`bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition-colors ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-          Register
+          {isLoading ? "Loading..." : "Register"}
         </button>
 
-        {message && <p className="text-center mt-2">{message}</p>}
+        {message && (
+          <p className={`text-center mt-2 ${
+            message.includes("✅") ? "text-green-600" : "text-red-600"
+          }`}>
+            {message}
+          </p>
+        )}
       </form>
     </div>
   );
-}
+} // JANGAN LUPA TUTUP FUNCTION INI
