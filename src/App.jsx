@@ -3,7 +3,7 @@ import "./index.css";
 
 import HomePage from "./Pages/HomePage";
 import ProfilePage from "./Pages/ProfilePage";
-import FilmPage from "./Pages/FilmPage";
+import MoviePage from "./Pages/MoviePage";
 import SeriesPage from "./Pages/SeriesPage";
 import TrendingPage from "./Pages/TrendingPage";
 import LoginPage from "./Pages/LoginPage";
@@ -24,7 +24,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/film" element={<FilmPage />} />
+          <Route path="/movie" element={<MoviePage />} />
           <Route path="/series" element={<SeriesPage />} />
           <Route path="/trending" element={<TrendingPage />} />
           <Route path="/login" element={<LoginPage />} />
