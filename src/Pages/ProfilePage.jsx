@@ -27,6 +27,15 @@ export default function ProfilePage() {
           Finished
         </button>
       </div>
+      <div className="bg-white rounded-lg w-fit mt-4">
+        <img
+          src="https://via.placeholder.com/150x225?text=Movie+Poster"
+          alt="Movie Poster"
+          className="w-72 h-88 object-cover rounded-t-lg"
+        />
+        <div className="pl-2 font-bold text-2xl">Movie</div>
+        <div className="p-2 text-gray-600">Description of the movie...</div>
+      </div>
     </div>
   );
 }
