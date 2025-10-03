@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
-import Logo from "./Logo";
-import MobileMenu from "./MobileMenu";
+import Logo from "../components/Logo";
+import MobileMenu from "../components/MobileMenu";
 
 export default function Header() {
   const { pathname } = useLocation();
