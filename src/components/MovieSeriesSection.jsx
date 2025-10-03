@@ -21,7 +21,7 @@ const films = [
   // Tambahin data lain di sini...
 ];
 
-export default function FilmSection() {
+export default function MovieSeriesSection() {
   return (
     <div className="container">
       <h1 className="text-text font-bold font-press-2p text-2xl pb-2">
