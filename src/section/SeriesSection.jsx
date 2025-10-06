@@ -2,17 +2,26 @@ import { useState } from 'react';
 import FilmCard from '../components/FilmCard';
 import FilterBar from '../components/FilterBar';
 
-const movies = [
+const series = [
   {
     id: 1,
-    category: 'Movie',
-    title: 'Jujutsu Kaisen 0',
-    desc: 'Prequel epik dengan Yuta Okkotsu sebagai protagonis utama. Pertarungan sengit dengan Suguru Geto.',
-    poster: './src/assets/img/posters/Gekijo-ban_Jujutsu_Kaisen_0.png',
-    categoryColor: 'text-blue-400',
+    category: 'Series',
+    title: 'Bleach: Thousand-Year Blood War',
+    desc: 'The final arc of Bleach, featuring epic battles against powerful enemies.',
+    poster: './src/assets/img/posters/Bleach_Thousand-Year_Blood_War.png',
+    categoryColor: 'text-highlight',
     genres: [1, 3], // Action, Supernatural
   },
-  // Tambahkan lebih banyak film di sini jika diperlukan
+  {
+    id: 2,
+    category: 'Series',
+    title: 'Chainsaw Man: Reze Arc',
+    desc: 'Denji encounters Reze, a mysterious girl with her own agenda.',
+    poster: './src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg',
+    categoryColor: 'text-highlight',
+    genres: [1, 3], // Action, Supernatural
+  },
+  // Tambahkan lebih banyak series di sini jika diperlukan
 ];
 
 const genres = [
@@ -23,22 +32,22 @@ const genres = [
   { id: 5, name: 'Comedy' },
 ];
 
-export default function MovieSection() {
+export default function SeriesSection() {
   const [selectedGenre, setSelectedGenre] = useState(null);
   const [sortBy, setSortBy] = useState('popularity.desc');
 
-  // Filter movies based on selected genre
-  const filteredMovies = selectedGenre
-    ? movies.filter(movie => movie.genres.includes(selectedGenre))
-    : movies;
+  // Filter series based on selected genre
+  const filteredSeries = selectedGenre
+    ? series.filter(serie => serie.genres.includes(selectedGenre))
+    : series;
 
   // For now, no sorting implemented since data is limited
-  const sortedMovies = filteredMovies;
+  const sortedSeries = filteredSeries;
 
   return (
     <div className="container">
       <h1 className="text-text font-bold font-press-2p text-2xl pb-2">
-        <span className="text-blue-400">M</span>ovies
+        <span className="text-highlight">S</span>eries
       </h1>
 
       <FilterBar
@@ -50,13 +59,13 @@ export default function MovieSection() {
       />
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8 xl:grid-cols-5">
-        {sortedMovies.map((movie) => (
-          <FilmCard key={movie.id} {...movie} />
+        {sortedSeries.map((serie) => (
+          <FilmCard key={serie.id} {...serie} />
         ))}
       </div>
 
-      {sortedMovies.length === 0 && (
-        <p className="text-text text-center mt-8">No movies found for the selected genre.</p>
+      {sortedSeries.length === 0 && (
+        <p className="text-text text-center mt-8">No series found for the selected genre.</p>
       )}
 
       <div className="flex justify-center mt-4">

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -9,6 +10,8 @@ export default function Register() {
   });
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -91,68 +94,125 @@ export default function Register() {
     <div className="min-h-screen flex items-center justify-center bg-primary/1">
       <form
         onSubmit={handleSubmit}
-        className="bg-white w-full max-w-sm p-6 rounded-lg shadow-md flex flex-col gap-4"
+        className="bg-gray-50 w-full max-w-sm p-6 rounded-lg shadow-md flex flex-col gap-4"
       >
-        <h1 className="text-2xl font-bold text-center mb-4 text-gray-800">
-          Register
-        </h1>
+        <h1 className="text-2xl font-bold text-center mb-4">Register</h1>
 
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={formData.username}
-          onChange={handleChange}
-          className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
+        {message && (
+          <div
+            className={`text-sm ${
+              message.includes("✅") ? "text-green-600" : "text-red-500"
+            }`}
+          >
+            {message}
+          </div>
+        )}
+
+        <div className="flex flex-col">
+          <label htmlFor="username" className="mb-1 text-sm font-medium">
+            Username
+          </label>
+          <input
+            id="username"
+            type="text"
+            name="username"
+            placeholder="Enter your username"
+            value={formData.username}
+            onChange={handleChange}
+            className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label htmlFor="email" className="mb-1 text-sm font-medium">
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            value={formData.email}
+            onChange={handleChange}
+            pattern=".+@.+"
+            className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 invalid:focus:ring-pink-700 invalid:focus:border-pink-700"
+            required
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label htmlFor="password" className="mb-1 text-sm font-medium">
+            Password
+          </label>
+          <div className="relative">
+            <input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={handleChange}
+              className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full pr-10"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700"
+            >
+              {showPassword ? (
+                <EyeSlashIcon className="h-5 w-5" />
+              ) : (
+                <EyeIcon className="h-5 w-5" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        <div className="flex flex-col">
+          <label htmlFor="confirmPassword" className="mb-1 text-sm font-medium">
+            Confirm Password
+          </label>
+          <div className="relative">
+            <input
+              id="confirmPassword"
+              type={showConfirmPassword ? "text" : "password"}
+              name="confirmPassword"
+              placeholder="Confirm your password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full pr-10"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700"
+            >
+              {showConfirmPassword ? (
+                <EyeSlashIcon className="h-5 w-5" />
+              ) : (
+                <EyeIcon className="h-5 w-5" />
+              )}
+            </button>
+          </div>
+        </div>
 
         <button
           type="submit"
           disabled={isLoading}
-          className={`bg-primary/100 hover:bg-primary/50 text-white font-semibold py-2 rounded-md transition-colors ${
-            isLoading ? "opacity-50 cursor-not-allowed" : ""
-          }`}
+          className="bg-accent/100 hover:bg-accent/75 text-white font-semibold py-2 rounded-md transition-colors"
         >
           {isLoading ? "Loading..." : "Register"}
         </button>
 
-        {message && (
-          <p
-            className={`text-center mt-2 ${
-              message.includes("✅") ? "text-green-600" : "text-red-600"
-            }`}
-          >
-            {message}
-          </p>
-        )}
+        <p className="text-center text-gray-600 text-sm">
+          Already have an account?{" "}
+          <a href="/login" className="text-blue-500 hover:underline">
+            Login
+          </a>
+        </p>
       </form>
     </div>
   );
