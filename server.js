@@ -3,7 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import cors from "cors";
+// Hapus import cors
 
 // ===== CONFIG =====
 dotenv.config();
@@ -22,7 +22,7 @@ if (!process.env.JWT_SECRET) {
   process.exit(1);
 }
 
-// ===== IMPROVED CORS CONFIGURATION =====
+// ===== MANUAL CORS MIDDLEWARE =====
 const allowedOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173", 
@@ -30,14 +30,25 @@ const allowedOrigins = [
   "https://2ef21abc5019.ngrok-free.app"
 ];
 
-const corsOptions = {
-  origin: allowedOrigins,
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
-};
-
-app.use(cors(corsOptions));
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  
+  // Check if the request origin is in the allowed list
+  if (allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
+  
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  
+  next();
+});
 
 // ===== MIDDLEWARES =====
 app.use(express.json());
@@ -92,17 +103,7 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// Test route untuk CORS
-app.get("/api/test-cors", (req, res) => {
-  res.json({ 
-    message: "CORS is working!",
-    origin: req.headers.origin,
-    timestamp: new Date().toISOString()
-  });
-});
-
 // ===== 404 HANDLER =====
-// PERBAIKAN: Gunakan approach yang lebih sederhana untuk 404
 app.use((req, res, next) => {
   res.status(404).json({ 
     message: "Route not found",
@@ -114,15 +115,6 @@ app.use((req, res, next) => {
 // ===== GLOBAL ERROR HANDLER =====
 app.use((err, req, res, next) => {
   console.error("🔥 Server Error:", err);
-  
-  // CORS error
-  if (err.message.includes('CORS')) {
-    return res.status(403).json({ 
-      message: "CORS Error",
-      allowedOrigins: allowedOrigins
-    });
-  }
-  
   res.status(500).json({ 
     message: "Internal Server Error",
     error: process.env.NODE_ENV === 'production' ? {} : err.message
@@ -136,7 +128,6 @@ app.listen(PORT, () => {
   console.log(`🎬 ==================================`);
   console.log(`✅ Server running on http://localhost:${PORT}`);
   console.log(`✅ Ngrok: https://8619d4a4cd35.ngrok-free.app`);
-  console.log(`✅ Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`✅ CORS enabled for: ${allowedOrigins.join(', ')}`);
   console.log(`🎬 ==================================`);
 });

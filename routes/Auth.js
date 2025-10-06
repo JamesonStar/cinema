@@ -190,6 +190,32 @@ router.get("/profile", authMiddleware, async (req, res) => {
   }
 });
 
+router.get("/me", authMiddleware, async (req, res) => {
+  try {
+    console.log("🔍 Getting user data for:", req.user.id);
+
+    const user = await User.findById(req.user.id).select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "User tidak ditemukan" });
+    }
+
+    console.log("✅ User found:", user.username);
+
+    res.json({
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        createdAt: user.createdAt
+      }
+    });
+  } catch (error) {
+    console.error("❌ Get user error:", error);
+    res.status(500).json({ message: "Terjadi kesalahan server" });
+  }
+});
+
 router.post("/logout", (req, res) => {
   res.clearCookie("token");
   res.json({ message: "Logout berhasil" });
