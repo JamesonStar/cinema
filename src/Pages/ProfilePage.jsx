@@ -1,8 +1,32 @@
+import FilmCard from "../components/FilmCard";
+
+const sortedSeries = [
+  {
+    id: 1,
+    category: "Series",
+    title: "Bleach: Thousand-Year Blood War",
+    desc: "The final arc of Bleach, featuring epic battles against powerful enemies.",
+    poster: "./src/assets/img/posters/Bleach_Thousand-Year_Blood_War.png",
+    list: "watching",
+  },
+];
+
+const genre = [
+  { id: "watching", name: "Watching" },
+  { id: "plan", name: "Plan to Watch" },
+  { id: "finished", name: "Finished" },
+];
+
 export default function ProfilePage() {
   return (
-    <div className="m-8">
+    <div className="container">
       {/* Profile header */}
-      <div className="text-white w-auto bg-primary/30 p-8 rounded-lg flex items-center gap-6 shadow-md">
+      <div className="relative text-white w-auto bg-primary/30 p-8 rounded-lg flex items-center gap-6 shadow-md">
+        {/* Edit Button */}
+        <button className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">
+          Edit Profile
+        </button>
+
         {/* Avatar */}
         <div className="rounded-full h-40 w-40 bg-white flex items-center justify-center text-primary font-bold text-3xl shadow">
           {/* You can replace this with an <img src="..." /> later */}U
@@ -27,14 +51,10 @@ export default function ProfilePage() {
           Finished
         </button>
       </div>
-      <div className="bg-white rounded-lg w-fit mt-4">
-        <img
-          src="https://via.placeholder.com/150x225?text=Movie+Poster"
-          alt="Movie Poster"
-          className="w-72 h-88 object-cover rounded-t-lg"
-        />
-        <div className="pl-2 font-bold text-2xl">Movie</div>
-        <div className="p-2 text-gray-600">Description of the movie...</div>
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8 xl:grid-cols-5 mt-5">
+        {sortedSeries.map((serie) => (
+          <FilmCard key={serie.id} {...serie} />
+        ))}
       </div>
     </div>
   );
