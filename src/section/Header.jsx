@@ -1,9 +1,12 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import Logo from "../components/Logo";
 import MobileMenu from "../components/MobileMenu";
 
 export default function Header() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { user, logout, loading } = useAuth();
 
   const navItems = [
     { name: "Home", path: "/" },
@@ -54,24 +57,48 @@ export default function Header() {
               </ul>
             </nav>
 
-            {/* Buttons */}
+            {/* Buttons - Conditionally render based on auth state */}
             <div className="hidden sm:flex items-center gap-3">
-              <Link
-                className="rounded-full bg-yellow-600 px-5 py-2 text-sm font-semibold text-white shadow-lg hover:opacity-90 transition-all"
-                to="/login"
-              >
-                Login
-              </Link>
-              <Link
-                className="rounded-full border-2 border-yellow-600 px-5 py-2 text-sm font-semibold text-yellow-600 hover:bg-yellow-600 hover:text-white transition-all"
-                to="/register"
-              >
-                Register
-              </Link>
+              {user ? (
+                // Show when user is logged in
+                <>
+                  <span className="text-gray-300 text-sm">
+                    Welcome, <span className="text-yellow-400 font-semibold">{user.username}</span>
+                  </span>
+                  <Link
+                    to="/profile"
+                    className="rounded-full bg-yellow-600 px-4 py-2 text-sm font-semibold text-white shadow-lg hover:opacity-90 transition-all"
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="rounded-full border-2 border-red-600 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-600 hover:text-white transition-all"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                // Show when user is not logged in
+                <>
+                  <Link
+                    className="rounded-full bg-yellow-600 px-5 py-2 text-sm font-semibold text-white shadow-lg hover:opacity-90 transition-all"
+                    to="/login"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    className="rounded-full border-2 border-yellow-600 px-5 py-2 text-sm font-semibold text-yellow-600 hover:bg-yellow-600 hover:text-white transition-all"
+                    to="/register"
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
             </div>
 
-            {/* Mobile Menu */}
-            <MobileMenu />
+            {/* Mobile Menu - Pass user state to mobile menu */}
+            <MobileMenu user={user} onLogout={handleLogout} />
           </div>
         </div>
       </div>

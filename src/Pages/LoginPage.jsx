@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
   const [form, setForm] = useState({ username: "", password: "" });
@@ -8,6 +8,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const onChange = e => setForm(prev => ({ ...prev, [e.target.id]: e.target.value }));
 
@@ -15,62 +16,103 @@ export default function Login() {
     e.preventDefault();
     setErr('');
     setLoading(true);
+    
     try {
-      const res = await fetch('http://localhost:3000/api/auth/login', {
+      const res = await fetch('https://8619d4a4cd35.ngrok-free.app/api/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', // penting: biar cookie httpOnly diterima
+        headers: { 
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
         body: JSON.stringify(form)
       });
 
-      const data = await res.json();
-      if (!res.ok) {
-        setErr(data.msg || 'Login failed');
-        setLoading(false);
-        return;
+      if (!res.ok && !res.headers.get('content-type')?.includes('application/json')) {
+        throw new Error(`Server error: ${res.status} ${res.statusText}`);
       }
-      // sukses: server meng-set cookie; kita bisa redirect
+
+      const data = await res.json();
+      
+      if (!res.ok) {
+        throw new Error(data.message || 'Login failed');
+      }
+      
+      // Login sukses - update auth context
+      console.log("✅ Login successful:", data);
+      login(data.user); // Set user in context
+      
+      // Redirect ke home
       navigate('/');
+      
     } catch (error) {
-      console.error(error);
-      setErr('Network error');
+      console.error("Login error:", error);
+      
+      if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
+        setErr('Tidak dapat terhubung ke server. Pastikan backend berjalan dan koneksi internet stabil.');
+      } else {
+        setErr(error.message || 'Terjadi kesalahan saat login');
+      }
     } finally {
       setLoading(false);
     }
   }
 
   return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <form onSubmit={onSubmit} className="bg-white w-full max-w-sm p-6 rounded-lg shadow-md flex flex-col gap-4">
+        <h1 className="text-2xl font-bold text-center mb-4 text-gray-800">Login</h1>
 
-    <div className="min-h-screen flex items-center justify-center bg-primary/1">
-      <form onSubmit={onSubmit} className="bg-gray-50 w-full max-w-sm p-6 rounded-lg shadow-md flex flex-col gap-4">
-
-        <h1 className="text-2xl font-bold text-center mb-4">Login</h1>
-
-        {err && <div className="text-red-500 text-sm">{err}</div>}
-
-        <div className="flex flex-col">
-          <label htmlFor="username" className="mb-1 text-sm font-medium">Username</label>
-          <input id="username" value={form.username} onChange={onChange} type="text" placeholder="Enter your username" className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        </div>
-
-        <div className="flex flex-col">
-          <label htmlFor="password" className="mb-1 text-sm font-medium">Password</label>
-          <div className="relative">
-            <input id="password" value={form.password} onChange={onChange} type={showPassword ? "text" : "password"} placeholder="Enter your password" className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full pr-10" />
-            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700">
-              {showPassword ? <EyeSlashIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
-            </button>
+        {err && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+            <span className="block sm:inline">{err}</span>
           </div>
+        )}
+
+        <div className="flex flex-col">
+          <label htmlFor="username" className="mb-1 text-sm font-medium text-gray-700">
+            Username atau Email
+          </label>
+          <input 
+            id="username" 
+            value={form.username} 
+            onChange={onChange} 
+            type="text" 
+            placeholder="Masukkan username atau email" 
+            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
         </div>
 
-        <button type="submit" disabled={loading} className="bg-accent/100 hover:bg-accent/75 text-white font-semibold py-2 rounded-md transition-colors">
-          {loading ? 'Logging in...' : 'Login'}
+        <div className="flex flex-col">
+          <label htmlFor="password" className="mb-1 text-sm font-medium text-gray-700">
+            Password
+          </label>
+          <input 
+            id="password" 
+            value={form.password} 
+            onChange={onChange} 
+            type="password" 
+            placeholder="Masukkan password" 
+            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
 
+        <button 
+          type="submit" 
+          disabled={loading}
+          className={`bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition-colors ${
+            loading ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
+        >
+          {loading ? 'Logging in...' : 'Login'}
         </button>
 
-        <p className="text-center text-gray-600 text-sm">
-          dont have an account?{" "}
-          <a href="/register" className="text-blue-500 hover:underline">Register</a>
+        <p className="text-center text-gray-600 text-sm mt-4">
+          Tidak punya akun?{" "}
+          <Link to="/register" className="text-blue-500 hover:underline font-medium">
+            Daftar di sini
+          </Link>
         </p>
       </form>
     </div>

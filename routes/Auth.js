@@ -1,15 +1,16 @@
 // routes/Auth.js
+// routes/Auth.js - pastikan bagian atas seperti ini
 import express from "express";
 import bcrypt from "bcryptjs";
-import User from "../models/User.js"; // Saya Konfirmasi bahwa yang betul adalah huruf besar, bukan kecil
+import jwt from "jsonwebtoken"; // JANGAN LUPA INI
+import User from "../models/User.js";
 import { authMiddleware } from "../middleware/auth.js";
 import dotenv from "dotenv";
-
-
 
 const router = express.Router();
 dotenv.config();
 
+// ... rest of your auth routes ...
 
 router.post("/register", async (req, res) => {
   try {
@@ -19,7 +20,7 @@ router.post("/register", async (req, res) => {
 
     // Validasi
     if (!username || !email || !password || !confirmPassword) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         message: "Semua field wajib diisi",
         details: { username: !!username, email: !!email, password: !!password, confirmPassword: !!confirmPassword }
       });
@@ -34,10 +35,10 @@ router.post("/register", async (req, res) => {
     }
 
     // Cek user existing
-    const existingUser = await User.findOne({ 
-      $or: [{ email }, { username }] 
+    const existingUser = await User.findOne({
+      $or: [{ email }, { username }]
     });
-    
+
     if (existingUser) {
       if (existingUser.email === email) {
         return res.status(400).json({ message: "Email sudah terdaftar" });
@@ -70,47 +71,56 @@ router.post("/register", async (req, res) => {
       createdAt: savedUser.createdAt
     };
 
-    res.status(201).json({ 
-      message: "Registrasi berhasil", 
-      user: userResponse 
+    res.status(201).json({
+      message: "Registrasi berhasil",
+      user: userResponse
     });
 
   } catch (error) {
     console.error("❌ Registration error:", error);
-    
+
     // Handle Mongoose validation errors
     if (error.name === 'ValidationError') {
       const errors = Object.values(error.errors).map(err => err.message);
-      return res.status(400).json({ 
-        message: "Data tidak valid", 
-        errors 
-      });
-    }
-    
-    // Handle duplicate key errors
-    if (error.code === 11000) {
-      return res.status(400).json({ 
-        message: "Email atau username sudah terdaftar" 
+      return res.status(400).json({
+        message: "Data tidak valid",
+        errors
       });
     }
 
-    res.status(500).json({ 
-      message: "Terjadi kesalahan server", 
+    // Handle duplicate key errors
+    if (error.code === 11000) {
+      return res.status(400).json({
+        message: "Email atau username sudah terdaftar"
+      });
+    }
+
+    res.status(500).json({
+      message: "Terjadi kesalahan server",
       error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
     });
   }
 });
 //LOGIN
+// LOGIN ROUTE - PERBAIKI INI
 router.post("/login", async (req, res) => {
   try {
+    console.log("📥 Login request received:", req.body);
+
     const { username, password } = req.body;
 
     if (!username || !password) {
       return res.status(400).json({ message: "Username dan password wajib diisi" });
     }
 
-    // Cari user by username
-    const user = await User.findOne({ username });
+    // PERBAIKI: Cari user by username ATAU email
+    const user = await User.findOne({
+      $or: [
+        { username: username.trim() },
+        { email: username.trim().toLowerCase() }
+      ]
+    });
+
     if (!user) {
       return res.status(400).json({ message: "Username atau password salah" });
     }
@@ -121,9 +131,20 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Username atau password salah" });
     }
 
+    // Pastikan JWT_SECRET ada
+    if (!process.env.JWT_SECRET) {
+      console.error("❌ JWT_SECRET is not defined");
+      return res.status(500).json({ message: "Server configuration error" });
+    }
+
     // Buat JWT token
     const token = jwt.sign(
-      { id: user._id, username: user.username, role: user.role },
+      {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role
+      },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
@@ -131,10 +152,12 @@ router.post("/login", async (req, res) => {
     // Set cookie httpOnly
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // jika production, set secure true (HTTPS)
-      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production", // HTTPS in production
+      sameSite: "lax", // Ubah dari "strict" ke "lax" untuk cross-origin
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 hari
     });
+
+    console.log("✅ Login successful for user:", user.username);
 
     // Kirim response
     res.json({
@@ -146,9 +169,13 @@ router.post("/login", async (req, res) => {
         role: user.role,
       },
     });
+
   } catch (error) {
-    console.error("Login error:", error);
-    res.status(500).json({ message: "Terjadi kesalahan server" });
+    console.error("❌ Login error:", error);
+    res.status(500).json({
+      message: "Terjadi kesalahan server",
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    });
   }
 });
 
@@ -160,6 +187,32 @@ router.get("/profile", authMiddleware, async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/me", authMiddleware, async (req, res) => {
+  try {
+    console.log("🔍 Getting user data for:", req.user.id);
+
+    const user = await User.findById(req.user.id).select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "User tidak ditemukan" });
+    }
+
+    console.log("✅ User found:", user.username);
+
+    res.json({
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        createdAt: user.createdAt
+      }
+    });
+  } catch (error) {
+    console.error("❌ Get user error:", error);
+    res.status(500).json({ message: "Terjadi kesalahan server" });
   }
 });
 
