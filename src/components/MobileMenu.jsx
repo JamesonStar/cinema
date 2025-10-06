@@ -47,11 +47,11 @@ export default function MobileMenu() {
           </li>
           <li>
             <Link
-              to="/film"
+              to="/movie"
               className="block rounded-md px-4 py-2 text-sm text-white hover:bg-primary"
               onClick={() => setIsOpen(false)}
             >
-              Film
+              Movie
             </Link>
           </li>
           <li>

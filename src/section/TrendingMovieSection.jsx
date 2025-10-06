@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import TrendingCard from "./UI/TrendingCard";
+import TrendingCard from "../components/TrendingCard";
 
 const trendingMovies = [
   {

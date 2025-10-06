@@ -1,160 +1,188 @@
-import { useState } from 'react';
-import FilterBar from '../components/UI/FilterBar';
-import TrendingCard from '../components/UI/TrendingCard';
-import Card from '../components/UI/Card';
-import Badge from '../components/UI/Badge';
-import Button from '../components/UI/Button';
+import TrendingCard from "../components/TrendingCard";
 
-// Sample trending films data
-const trendingFilms = [
+const trendingMovies = [
   {
     id: 1,
-    poster: './src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg',
-    alt: 'Chainsaw Man',
+    poster: "./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg",
+    alt: "Chainsaw Man",
     rank: 1,
-    rankColor: 'text-yellow-500',
-    genre: 'Action',
-    title: 'Chainsaw Man',
-    releaseYear: 2022,
-    rating: 8.5,
+    rankColor: "text-yellow-500",
   },
   {
     id: 2,
-    poster: './src/assets/img/posters/Gekijo-ban_Jujutsu_Kaisen_0.png',
-    alt: 'Jujutsu Kaisen 0',
+    poster: "./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg",
+    alt: "Chainsaw Man",
     rank: 2,
-    rankColor: 'text-slate-400',
-    genre: 'Action',
-    title: 'Jujutsu Kaisen 0',
-    releaseYear: 2021,
-    rating: 7.9,
+    rankColor: "text-slate-400",
   },
   {
     id: 3,
-    poster: './src/assets/img/posters/Bleach_Thousand-Year_Blood_War.png',
-    alt: 'Bleach: Thousand-Year Blood War',
+    poster: "./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg",
+    alt: "Chainsaw Man",
     rank: 3,
-    rankColor: 'text-yellow-700',
-    genre: 'Action',
-    title: 'Bleach: Thousand-Year Blood War',
-    releaseYear: 2022,
-    rating: 8.2,
+    rankColor: "text-yellow-700",
   },
-  // Add more films as needed
+  {
+    id: 4,
+    poster: "./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg",
+    alt: "Chainsaw Man",
+    rank: 4,
+    rankColor: "text-white",
+  },
+  {
+    id: 5,
+    poster: "./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg",
+    alt: "Chainsaw Man",
+    rank: 5,
+    rankColor: "text-white",
+  },
+  {
+    id: 6,
+    poster: "./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg",
+    alt: "Chainsaw Man",
+    rank: 6,
+    rankColor: "text-white",
+  },
+  {
+    id: 7,
+    poster: "./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg",
+    alt: "Chainsaw Man",
+    rank: 7,
+    rankColor: "text-white",
+  },
 ];
-
-const genres = [
-  { id: 'Action', name: 'Action' },
-  { id: 'Drama', name: 'Drama' },
-  { id: 'Comedy', name: 'Comedy' },
-  // Add more genres
+const trendingSeries = [
+  {
+    id: 1,
+    poster: "./src/assets/img/posters/Bleach_Thousand-Year_Blood_War.png",
+    alt: "Bleach: Thousand-Year Blood War",
+    rank: 1,
+    rankColor: "text-yellow-500",
+  },
+  {
+    id: 2,
+    poster: "./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg",
+    alt: "Chainsaw Man: Reze Arc",
+    rank: 2,
+    rankColor: "text-slate-400",
+  },
+  {
+    id: 3,
+    poster: "./src/assets/img/posters/Bleach_Thousand-Year_Blood_War.png",
+    alt: "Bleach: Thousand-Year Blood War",
+    rank: 3,
+    rankColor: "text-yellow-700",
+  },
+  {
+    id: 4,
+    poster: "./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg",
+    alt: "Chainsaw Man: Reze Arc",
+    rank: 4,
+    rankColor: "text-white",
+  },
+  {
+    id: 5,
+    poster: "./src/assets/img/posters/Bleach_Thousand-Year_Blood_War.png",
+    alt: "Bleach: Thousand-Year Blood War",
+    rank: 5,
+    rankColor: "text-white",
+  },
+  {
+    id: 6,
+    poster: "./src/assets/img/posters/Chainsaw-Man-Reze-Arc-Key-Visual.jpg",
+    alt: "Chainsaw Man: Reze Arc",
+    rank: 6,
+    rankColor: "text-white",
+  },
+  {
+    id: 7,
+    poster: "./src/assets/img/posters/Bleach_Thousand-Year_Blood_War.png",
+    alt: "Bleach: Thousand-Year Blood War",
+    rank: 7,
+    rankColor: "text-white",
+  },
 ];
 
 export default function TrendingPage() {
-  const [selectedGenre, setSelectedGenre] = useState(null);
-  const [sortBy, setSortBy] = useState('popularity.desc');
-  const [visibleFilms, setVisibleFilms] = useState(6);
-
-  // Filter and sort films
-  const filteredFilms = trendingFilms
-    .filter((film) => !selectedGenre || film.genre === selectedGenre)
-    .sort((a, b) => {
-      if (sortBy === 'release_date.desc') return b.releaseYear - a.releaseYear;
-      if (sortBy === 'release_date.asc') return a.releaseYear - b.releaseYear;
-      if (sortBy === 'vote_average.desc') return b.rating - a.rating;
-      return a.rank - b.rank; // Default trending
-    });
-
-  const displayedFilms = filteredFilms.slice(0, visibleFilms);
-
-  const loadMore = () => {
-    setVisibleFilms(prev => prev + 6);
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white">
-      {/* Header Section */}
-      <div className="relative py-16 px-6 md:px-10">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-6xl md:text-8xl font-black font-monoton mb-6 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
-            TRENDING
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 font-light max-w-3xl mx-auto">
-            Stay ahead of the curve with the most buzzed-about films of the moment
-          </p>
-          <div className="mt-8 flex justify-center">
-            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3">
-              <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-              <span className="text-sm font-medium">Updated in real-time</span>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="container mx-auto px-6 py-12 space-y-16">
+      {/* Movies Section */}
+      <section>
+        <h2 className="font-press-2p text-4xl mb-8 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+          🎬 Top 7 Movies
+        </h2>
 
-      {/* Filter Section */}
-      <div className="px-6 md:px-10 mb-12">
-        <div className="max-w-7xl mx-auto">
-          <FilterBar
-            genres={genres}
-            selectedGenre={selectedGenre}
-            onGenreChange={setSelectedGenre}
-            sortBy={sortBy}
-            onSortChange={setSortBy}
+        {/* Hero Movie (Rank #1) */}
+        <div className="relative rounded-3xl overflow-hidden shadow-lg mb-12">
+          <img
+            src={trendingMovies[0].poster}
+            alt={trendingMovies[0].alt}
+            className="w-full h-[500px] object-cover"
           />
-        </div>
-      </div>
-
-      {/* Films Grid */}
-      <div className="px-6 md:px-10 pb-16">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {displayedFilms.map((film, index) => (
-              <div
-                key={film.id}
-                className="group animate-fade-in-up"
-                style={{ animationDelay: `${index * 150}ms` }}
-              >
-                <Card className="relative overflow-hidden bg-gray-800/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2">
-                  <div className="relative">
-                    <TrendingCard
-                      poster={film.poster}
-                      alt={film.alt}
-                      rank={film.rank}
-                      rankColor={film.rankColor}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                      <h3 className="font-bold text-xl mb-3 text-white">{film.title}</h3>
-                      <div className="flex items-center justify-between mb-3">
-                        <Badge variant="primary" size="sm">
-                          {film.genre}
-                        </Badge>
-                        <div className="flex items-center space-x-1">
-                          <span className="text-yellow-400">★</span>
-                          <span className="text-white font-semibold">{film.rating}</span>
-                        </div>
-                      </div>
-                      <p className="text-gray-300 text-sm mb-4">{film.releaseYear}</p>
-                      <Button variant="outline" size="sm" className="w-full">
-                        View Details
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
-              </div>
-            ))}
-          </div>
-
-          {/* Load More */}
-          {visibleFilms < filteredFilms.length && (
-            <div className="text-center mt-12">
-              <Button onClick={loadMore} variant="primary" size="lg">
-                Load More Films
-              </Button>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-8">
+            <span className="px-4 py-1 bg-yellow-500 text-black font-bold rounded-full text-lg w-fit mb-4">
+              #1
+            </span>
+            <h3 className="text-4xl font-extrabold text-white mb-4">
+              {trendingMovies[0].alt}
+            </h3>
+            <div className="flex gap-4">
+              <button className="px-6 py-2 bg-primary rounded-xl text-white hover:bg-primary/80 transition">
+                See Detail
+              </button>
+              <button className="px-6 py-2 bg-secondary rounded-xl text-white hover:bg-secondary/80 transition">
+                + Watchlist
+              </button>
             </div>
-          )}
+          </div>
         </div>
-      </div>
+
+        {/* Rank 2–7 */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+          {trendingMovies.slice(1).map((movie) => (
+            <TrendingCard key={movie.id} {...movie} />
+          ))}
+        </div>
+      </section>
+
+      {/* Series Section */}
+      <section>
+        <h2 className="font-press-2p text-4xl mb-8 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+          📺 Top 7 Series
+        </h2>
+
+        {/* Hero Series (Rank #1) */}
+        <div className="relative rounded-3xl overflow-hidden shadow-lg mb-12">
+          <img
+            src={trendingSeries[0].poster}
+            alt={trendingSeries[0].alt}
+            className="w-full h-[500px] object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-8">
+            <span className="px-4 py-1 bg-yellow-500 text-black font-bold rounded-full text-lg w-fit mb-4">
+              #1
+            </span>
+            <h3 className="text-4xl font-extrabold text-white mb-4">
+              {trendingSeries[0].alt}
+            </h3>
+            <div className="flex gap-4">
+              <button className="px-6 py-2 bg-primary rounded-xl text-white hover:bg-primary/80 transition">
+                See Detail
+              </button>
+              <button className="px-6 py-2 bg-secondary rounded-xl text-white hover:bg-secondary/80 transition">
+                + Watchlist
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Rank 2–7 */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+          {trendingSeries.slice(1).map((serie) => (
+            <TrendingCard key={serie.id} {...serie} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

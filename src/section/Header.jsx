@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import Logo from "./Logo";
-import MobileMenu from "./MobileMenu";
+import Logo from "../components/Logo";
+import MobileMenu from "../components/MobileMenu";
 
 export default function Header() {
   const { pathname } = useLocation();
@@ -10,35 +10,11 @@ export default function Header() {
 
   const navItems = [
     { name: "Home", path: "/" },
-    { name: "Film", path: "/film" },
+    { name: "Movie", path: "/movie" },
     { name: "Series", path: "/series" },
     { name: "Trending", path: "/trending" },
     { name: "Profile", path: "/profile" },
   ];
-
-  const handleLogout = async () => {
-    await logout();
-    navigate('/');
-  };
-
-  // Show loading state
-  if (loading) {
-    return (
-      <header className="sticky top-0 z-50 bg-dark/60 backdrop-blur-md shadow-md">
-        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex-1 flex items-center gap-3">
-              <Link to="/" className="flex items-center gap-2">
-                <span className="sr-only">Home</span>
-                <Logo />
-              </Link>
-            </div>
-            <div className="text-gray-400 text-sm">Loading...</div>
-          </div>
-        </div>
-      </header>
-    );
-  }
 
   return (
     <header className="sticky top-0 z-50 bg-dark/60 backdrop-blur-md shadow-md">
