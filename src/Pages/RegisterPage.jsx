@@ -5,7 +5,7 @@ export default function Register() {
     username: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -13,7 +13,7 @@ export default function Register() {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -24,7 +24,7 @@ export default function Register() {
 
     // Client-side validation
     const { username, email, password, confirmPassword } = formData;
-    
+
     if (!username.trim() || !email.trim() || !password || !confirmPassword) {
       setMessage("❌ Semua field wajib diisi");
       setIsLoading(false);
@@ -44,38 +44,40 @@ export default function Register() {
     }
 
     try {
-      const res = await fetch("https://2ef21abc5019.ngrok-free.app/api/auth/register", {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ 
-          username: username.trim(), 
-          email: email.trim().toLowerCase(), 
-          password, 
-          confirmPassword 
-        }),
-      });
+      const res = await fetch(
+        "https://2ef21abc5019.ngrok-free.app/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username.trim(),
+            email: email.trim().toLowerCase(),
+            password,
+            confirmPassword,
+          }),
+        }
+      );
 
       const data = await res.json();
-      
+
       if (!res.ok) {
         // Handle validation errors from server
         if (data.errors) {
-          throw new Error(data.errors.join(', '));
+          throw new Error(data.errors.join(", "));
         }
         throw new Error(data.message || `Error: ${res.status}`);
       }
-      
+
       setMessage("✅ " + data.message);
       // Clear form
       setFormData({
         username: "",
         email: "",
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
       });
-      
     } catch (err) {
       console.error("Register error:", err);
       setMessage("❌ " + err.message);
@@ -86,12 +88,14 @@ export default function Register() {
 
   // RETURN STATEMENT YANG BENAR - dalam function component
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-primary/1">
       <form
         onSubmit={handleSubmit}
         className="bg-white w-full max-w-sm p-6 rounded-lg shadow-md flex flex-col gap-4"
       >
-        <h1 className="text-2xl font-bold text-center mb-4 text-gray-800">Register</h1>
+        <h1 className="text-2xl font-bold text-center mb-4 text-gray-800">
+          Register
+        </h1>
 
         <input
           type="text"
@@ -129,11 +133,11 @@ export default function Register() {
           className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           required
         />
-        
+
         <button
           type="submit"
           disabled={isLoading}
-          className={`bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition-colors ${
+          className={`bg-primary/100 hover:bg-primary/50 text-white font-semibold py-2 rounded-md transition-colors ${
             isLoading ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
@@ -141,9 +145,11 @@ export default function Register() {
         </button>
 
         {message && (
-          <p className={`text-center mt-2 ${
-            message.includes("✅") ? "text-green-600" : "text-red-600"
-          }`}>
+          <p
+            className={`text-center mt-2 ${
+              message.includes("✅") ? "text-green-600" : "text-red-600"
+            }`}
+          >
             {message}
           </p>
         )}
