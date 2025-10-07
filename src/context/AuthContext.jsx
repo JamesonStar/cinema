@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
       }
       
       // Jika tidak ada di localStorage, cek ke server
-      const res = await fetch('https://8619d4a4cd35.ngrok-free.app/api/auth/me', {
+      const res = await fetch('https://350fadaf5179.ngrok-free.app/api/auth/me', {
         method: 'GET',
         credentials: 'include',
       });
@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await fetch('https://8619d4a4cd35.ngrok-free.app/api/auth/logout', {
+      await fetch('https://350fadaf5179.ngrok-free.app/api/auth/logout', {
         method: 'POST',
         credentials: 'include',
       });

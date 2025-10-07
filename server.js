@@ -3,7 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-// Hapus import cors
+import cors from "cors";
 
 // ===== CONFIG =====
 dotenv.config();
@@ -22,33 +22,34 @@ if (!process.env.JWT_SECRET) {
   process.exit(1);
 }
 
-// ===== MANUAL CORS MIDDLEWARE =====
+// ===== CORS CONFIGURATION =====
 const allowedOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173", 
-  "https://8619d4a4cd35.ngrok-free.app",
+  "https://350fadaf5179.ngrok-free.app",
   "https://2ef21abc5019.ngrok-free.app"
 ];
 
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  
-  // Check if the request origin is in the allowed list
-  if (allowedOrigins.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-  
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-  
-  // Handle preflight requests
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-  
-  next();
-});
+// HAPUS SEMUA MANUAL CORS MIDDLEWARE DAN GUNAKAN INI SAJA:
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, Postman, etc.)
+    if (!origin) return callback(null, true);
+    
+    console.log("🌐 CORS check for origin:", origin);
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log("❌ CORS blocked for origin:", origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cookie'],
+  exposedHeaders: ['Set-Cookie']
+}));
 
 // ===== MIDDLEWARES =====
 app.use(express.json());
@@ -59,6 +60,7 @@ app.use(cookieParser());
 app.use((req, res, next) => {
   console.log("➡️", req.method, req.url);
   console.log("🌐 Origin:", req.headers.origin);
+  console.log("🍪 Cookies:", req.headers.cookie);
   if (Object.keys(req.body).length > 0) {
     console.log("📩 Body:", req.body);
   }
@@ -88,7 +90,7 @@ app.use("/api/auth", authRoutes);
 
 // ===== HEALTH CHECK & TEST ROUTES =====
 app.get("/", (req, res) => {
-  res.json({ 
+  res.json({
     message: "Cinema API is running 🚀",
     timestamp: new Date().toISOString()
   });
@@ -105,7 +107,7 @@ app.get("/api/health", (req, res) => {
 
 // ===== 404 HANDLER =====
 app.use((req, res, next) => {
-  res.status(404).json({ 
+  res.status(404).json({
     message: "Route not found",
     path: req.originalUrl,
     method: req.method
@@ -115,7 +117,16 @@ app.use((req, res, next) => {
 // ===== GLOBAL ERROR HANDLER =====
 app.use((err, req, res, next) => {
   console.error("🔥 Server Error:", err);
-  res.status(500).json({ 
+  
+  // Handle CORS errors
+  if (err.message === 'Not allowed by CORS') {
+    return res.status(403).json({
+      message: "CORS Error: Origin not allowed",
+      allowedOrigins: allowedOrigins
+    });
+  }
+  
+  res.status(500).json({
     message: "Internal Server Error",
     error: process.env.NODE_ENV === 'production' ? {} : err.message
   });
@@ -127,7 +138,7 @@ app.listen(PORT, () => {
   console.log(`🎬 Cinema API Server Started`);
   console.log(`🎬 ==================================`);
   console.log(`✅ Server running on http://localhost:${PORT}`);
-  console.log(`✅ Ngrok: https://8619d4a4cd35.ngrok-free.app`);
+  console.log(`✅ Ngrok: https://350fadaf5179.ngrok-free.app`);
   console.log(`✅ CORS enabled for: ${allowedOrigins.join(', ')}`);
   console.log(`🎬 ==================================`);
 });

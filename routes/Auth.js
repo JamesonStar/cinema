@@ -12,6 +12,7 @@ dotenv.config();
 
 // ... rest of your auth routes ...
 
+
 router.post("/register", async (req, res) => {
   try {
     console.log("📥 Request body:", req.body); // Debug log
@@ -219,6 +220,22 @@ router.get("/me", authMiddleware, async (req, res) => {
 router.post("/logout", (req, res) => {
   res.clearCookie("token");
   res.json({ message: "Logout berhasil" });
+});
+
+// Tambahkan CORS handling khusus untuk auth routes jika diperlukan
+router.use((req, res, next) => {
+  const allowedOrigins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "https://350fadaf5179.ngrok-free.app"
+  ];
+  
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
+  res.header('Access-Control-Allow-Credentials', 'true');
+  next();
 });
 
 export default router;

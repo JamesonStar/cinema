@@ -1,39 +1,46 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
 import "./index.css";
 
-import HomePage from "./Pages/HomePage";
-import ProfilePage from "./Pages/ProfilePage";
-import MoviePage from "./Pages/MoviePage";
-import SeriesPage from "./Pages/SeriesPage";
-import TrendingPage from "./Pages/TrendingPage";
-import LoginPage from "./Pages/LoginPage";
-import RegisterPage from "./Pages/RegisterPage";
-import Header from "./section/Header";
-import Footer from "./section/Footer";
-import ScrollToTopButton from "./components/ScrollTop";
+// Halaman
+import HomePage from './pages/HomePage'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
+import ProfilePage from './pages/ProfilePage'
+import MoviePage from './pages/MoviePage'
+import SeriesPage from './pages/SeriesPage'
+import TrendingPage from './pages/TrendingPage'
+
+// Section
+import Header from './section/Header'
+import Footer from './section/Footer'
+
+// Context
+import { AuthProvider } from './context/AuthContext'
 
 function App() {
   return (
-    <div className="">
-      <Router>
-        <Header />
+    <AuthProvider>
+      <div className="">
+        <Router>
+          <Header />
 
-        <ScrollToTopButton />
+          {/* HAPUS BARIS INI JIKA ScrollToTopButton TIDAK ADA */}
+          {/* <ScrollToTopButton /> */}
 
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/movie" element={<MoviePage />} />
-          <Route path="/series" element={<SeriesPage />} />
-          <Route path="/trending" element={<TrendingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-        </Routes>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/movie" element={<MoviePage />} />
+            <Route path="/series" element={<SeriesPage />} />
+            <Route path="/trending" element={<TrendingPage />} />
+            <Route path="/login" element={<LoginPage />} />
+          </Routes>
 
-        <Footer />
-      </Router>
-    </div>
+          <Footer />
+        </Router>
+      </div>
+    </AuthProvider>
   );
 }
 
