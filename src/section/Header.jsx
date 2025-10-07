@@ -11,7 +11,7 @@ export default function Header() {
   // Tambahkan handleLogout function
   const handleLogout = async () => {
     await logout();
-    navigate('/');
+    navigate("/");
   };
 
   const navItems = [
@@ -87,18 +87,15 @@ export default function Header() {
               {user ? (
                 // Show when user is logged in
                 <>
-                  <span className="text-gray-300 text-sm">
-                    Welcome, <span className="text-yellow-400 font-semibold">{user.username}</span>
-                  </span>
                   <Link
                     to="/profile"
-                    className="rounded-full bg-yellow-600 px-4 py-2 text-sm font-semibold text-white shadow-lg hover:opacity-90 transition-all"
+                    className="rounded-full h-10 w-10 bg-white flex items-center justify-center text-primary font-bold text-3xl shadow"
                   >
-                    Profile
+                    <p className="">U</p>
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="rounded-full border-2 border-red-600 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-600 hover:text-white transition-all"
+                    className="rounded-full border-2 border-yellow-600 px-5 py-2 text-sm font-semibold text-yellow-600 hover:bg-yellow-600 hover:text-white transition-all"
                   >
                     Logout
                   </button>

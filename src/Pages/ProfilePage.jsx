@@ -36,7 +36,7 @@ export default function ProfilePage() {
 
   // Get initial for avatar
   const getInitial = () => {
-    return user.username ? user.username.charAt(0).toUpperCase() : 'U';
+    return user.username ? user.username.charAt(0).toUpperCase() : "U";
   };
 
   return (
@@ -53,20 +53,12 @@ export default function ProfilePage() {
           {/* You can replace this with an <img src="..." /> later */}U
         </div>
 
-          {/* User Info */}
-          <div className="flex flex-col justify-center">
-            <h1 className="text-3xl font-bold">{user.username}</h1>
-            <p className="text-gray-200 mt-1">{user.email}</p>
-            <div className="flex items-center gap-4 mt-3">
-              <span className="px-3 py-1 bg-yellow-600 text-white text-sm rounded-full capitalize">
-                {user.role}
-              </span>
-              <span className="text-gray-300 text-sm">
-                Member since {new Date(user.createdAt).toLocaleDateString('id-ID')}
-              </span>
-            </div>
-          </div>
+        {/* User Info */}
+        <div className="flex flex-col justify-center">
+          <h1 className="text-3xl font-bold">{user.username}</h1>
+          <p className="text-gray-200 mt-1">This is a short bio...</p>
         </div>
+      </div>
 
       {/* Tabs */}
       <div className="bg-white w-auto mt-4 p-4 rounded-lg flex flex-row gap-6 shadow">
