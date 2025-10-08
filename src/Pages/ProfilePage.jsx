@@ -1,3 +1,5 @@
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import FilmCard from "../components/FilmCard";
 
 const sortedSeries = [
@@ -50,23 +52,20 @@ export default function ProfilePage() {
 
         {/* Avatar */}
         <div className="rounded-full h-40 w-40 bg-white flex items-center justify-center text-primary font-bold text-3xl shadow">
-          {/* You can replace this with an <img src="..." /> later */}U
+          {getInitial()}
         </div>
 
-          {/* User Info */}
-          <div className="flex flex-col justify-center">
-            <h1 className="text-3xl font-bold">{user.username}</h1>
-            <p className="text-gray-200 mt-1">{user.email}</p>
-            <div className="flex items-center gap-4 mt-3">
-              <span className="px-3 py-1 bg-yellow-600 text-white text-sm rounded-full capitalize">
-                {user.role}
-              </span>
-              <span className="text-gray-300 text-sm">
-                Member since {new Date(user.createdAt).toLocaleDateString('id-ID')}
-              </span>
-            </div>
+        {/* User Info */}
+        <div className="flex flex-col justify-center">
+          <h1 className="text-3xl font-bold">{user.username}</h1>
+          <p className="text-gray-200 mt-1">{user.email}</p>
+          <div className="flex items-center gap-4 mt-3">
+            <span className="text-gray-300 text-sm">
+              Member since {new Date(user.createdAt).toLocaleDateString('id-ID')}
+            </span>
           </div>
         </div>
+      </div>
 
       {/* Tabs */}
       <div className="bg-white w-auto mt-4 p-4 rounded-lg flex flex-row gap-6 shadow">
@@ -80,6 +79,7 @@ export default function ProfilePage() {
           Finished
         </button>
       </div>
+      
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8 xl:grid-cols-5 mt-5">
         {sortedSeries.map((serie) => (
           <FilmCard key={serie.id} {...serie} />

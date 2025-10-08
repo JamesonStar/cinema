@@ -47,7 +47,7 @@ export default function Register() {
     }
 
     try {
-      const res = await fetch("https://350fadaf5179.ngrok-free.app/api/auth/register", {
+      const res = await fetch("https://77aace9a0a52.ngrok-free.app/api/auth/register", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
