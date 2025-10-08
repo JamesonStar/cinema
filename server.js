@@ -26,7 +26,7 @@ if (!process.env.JWT_SECRET) {
 const allowedOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173", 
-  "https://350fadaf5179.ngrok-free.app",
+  "https://77aace9a0a52.ngrok-free.app",
   "https://2ef21abc5019.ngrok-free.app"
 ];
 
@@ -138,7 +138,7 @@ app.listen(PORT, () => {
   console.log(`🎬 Cinema API Server Started`);
   console.log(`🎬 ==================================`);
   console.log(`✅ Server running on http://localhost:${PORT}`);
-  console.log(`✅ Ngrok: https://350fadaf5179.ngrok-free.app`);
+  console.log(`✅ Ngrok: https://77aace9a0a52.ngrok-free.app`);
   console.log(`✅ CORS enabled for: ${allowedOrigins.join(', ')}`);
   console.log(`🎬 ==================================`);
 });
